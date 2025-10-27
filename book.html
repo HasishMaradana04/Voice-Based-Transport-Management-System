@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Book Ticket - {{ schedule.route.route_name }}{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card my-4">
+            <div class="card-header text-center bg-primary text-white">
+                <h5><i class="fas fa-ticket-alt"></i> Book Ticket</h5>
+            </div>
+            <div class="card-body">
+                <h6 class="mb-2">Route: {{ schedule.route.route_name }}</h6>
+                <p>
+                    <strong>From:</strong> {{ schedule.route.source }}<br>
+                    <strong>To:</strong> {{ schedule.route.destination }}<br>
+                    <strong>Departure:</strong> {{ schedule.departure_time.strftime('%Y-%m-%d %H:%M') }}<br>
+                    <strong>Arrival:</strong> {{ schedule.arrival_time.strftime('%Y-%m-%d %H:%M') }}<br>
+                    <strong>Fare:</strong> ₹{{ schedule.route.fare }} per seat<br>
+                    <strong>Available Seats:</strong> {{ schedule.available_seats }}
+                </p>
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="seats" class="form-label">Number of Seats</label>
+                        <input type="number" class="form-control" name="seats" min="1" max="{{ schedule.available_seats }}" value="1" required>
+                    </div>
+                    <button type="submit" class="btn btn-success w-100">
+                        <i class="fas fa-check"></i> Book Now
+                    </button>
+                </form>
+                <div class="mt-3 text-center">
+                    <a href="{{ url_for('transport.view_schedule', route_id=schedule.route.id) }}" class="btn btn-outline-secondary btn-sm">Back to Timetable</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

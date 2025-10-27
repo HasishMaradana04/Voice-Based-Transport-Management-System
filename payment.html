@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Pay for Booking - Voice Transport{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+        <div class="card my-5 p-3">
+            <h5 class="mb-3">
+                Complete Payment for Booking 
+                <span class="badge bg-info text-dark">{{ booking.booking_reference }}</span>
+            </h5>
+            <ul class="list-group mb-3">
+                <li class="list-group-item">Route: <strong>{{ booking.schedule.route.route_name }}</strong></li>
+                <li class="list-group-item">Seats: <strong>{{ booking.seats_booked }}</strong></li>
+                <li class="list-group-item">Total Fare: <strong>₹{{ booking.total_fare }}</strong></li>
+            </ul>
+            <form method="post">
+                <button type="submit" class="btn btn-success w-100 btn-lg mb-2">
+                    <i class="fas fa-credit-card"></i> Pay Now
+                </button>
+            </form>
+            <a href="{{ url_for('transport.booking_details', booking_id=booking.id) }}" class="btn btn-outline-secondary w-100 mt-2">
+                Back to Booking Details
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

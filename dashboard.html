@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Dashboard - Voice Transport Management{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col-md-4">
+        <div class="card mb-3">
+            <div class="card-header">System Stats</div>
+            <div class="card-body">
+                <ul class="list-group">
+                    <li class="list-group-item">Total Routes: <strong>{{ stats.total_routes }}</strong></li>
+                    <li class="list-group-item">Total Vehicles: <strong>{{ stats.total_vehicles }}</strong></li>
+                    <li class="list-group-item">Total Bookings: <strong>{{ stats.total_bookings }}</strong></li>
+                    <li class="list-group-item">My Bookings: <strong>{{ stats.my_bookings }}</strong></li>
+                    <li class="list-group-item">Available Vehicles: <strong>{{ stats.available_vehicles }}</strong></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="card mb-3">
+            <div class="card-header">Recent Bookings</div>
+            <div class="card-body">
+                {% if recent_bookings %}
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Reference</th>
+                            <th>Route</th>
+                            <th>Seats</th>
+                            <th>Status</th>
+                            <th>Booked At</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for booking in recent_bookings %}
+                        <tr>
+                            <td>{{ booking.booking_reference }}</td>
+                            <td>{{ booking.schedule.route.route_name }}</td>
+                            <td>{{ booking.seats_booked }}</td>
+                            <td>{{ booking.status }}</td>
+                            <td>{{ booking.booking_time.strftime('%Y-%m-%d %H:%M') }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <p>No recent bookings found.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Timetable - {{ route.route_name }}{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <div class="card my-4">
+            <div class="card-header bg-warning text-dark">
+                <h5><i class="fas fa-clock"></i> Timetable for {{ route.route_name }}</h5>
+            </div>
+            <div class="card-body">
+                <p>
+                    <strong>From:</strong> {{ route.source }} &nbsp; 
+                    <strong>To:</strong> {{ route.destination }}<br>
+                    <strong>Distance:</strong> {{ route.distance }} km &nbsp;
+                    <strong>Fare:</strong> ₹{{ route.fare }}
+                </p>
+                {% if schedules %}
+                <table class="table table-bordered table-hover">
+                    <thead class="table-secondary">
+                        <tr>
+                            <th>Vehicle</th>
+                            <th>Departure</th>
+                            <th>Arrival</th>
+                            <th>Available Seats</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for schedule in schedules %}
+                        <tr>
+                            <td>{{ schedule.vehicle.vehicle_number }}</td>
+                            <td>{{ schedule.departure_time.strftime('%Y-%m-%d %H:%M') }}</td>
+                            <td>{{ schedule.arrival_time.strftime('%Y-%m-%d %H:%M') }}</td>
+                            <td>{{ schedule.available_seats }}</td>
+                            <td>
+                                {% if schedule.available_seats > 0 %}
+                                <a href="{{ url_for('transport.book_ticket', schedule_id=schedule.id) }}" class="btn btn-success btn-sm">Book</a>
+                                {% else %}
+                                <span class="badge bg-danger">Full</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <div class="alert alert-info">No scheduled journeys available for this route.</div>
+                {% endif %}
+                <div class="mt-3">
+                    <a href="{{ url_for('transport.routes') }}" class="btn btn-outline-secondary btn-sm">Back to Routes</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}Voice-Based Transport Management System{% endblock %}
+{% block content %}
+<!-- Particle background -->
+<div id="tsparticles" style="position:fixed;z-index:0;top:0;left:0;width:100vw;height:100vh;"></div>
+
+<!-- Fullscreen flex-centered wrapper -->
+<div class="d-flex flex-column justify-content-center align-items-center min-vh-100"
+     style="position:relative; z-index:1;">
+    <div class="col-md-8 text-center">
+        <h1 class="display-4 mb-4 fw-bold" style="background: linear-gradient(90deg,#2c97de,#635dff);color:transparent;-webkit-background-clip:text;background-clip:text;">
+            <i class="fas fa-microphone-alt fa-lg"></i>
+            Voice-Based Transport<br>Management System
+        </h1>
+        <p class="lead mb-5 text-light">
+            Manage your travel smartly, quickly, and with your voice.<br>
+            Get started below!
+        </p>
+        <div class="d-flex flex-wrap justify-content-center gap-3">
+            <a href="{{ url_for('auth.login') }}" class="btn btn-lg btn-primary shadow-lg px-5">
+                <i class="fas fa-sign-in-alt"></i> Login
+            </a>
+            <a href="{{ url_for('auth.register') }}" class="btn btn-lg btn-outline-success shadow-lg px-5">
+                <i class="fas fa-user-plus"></i> Register
+            </a>
+            <a href="{{ url_for('transport.dashboard') }}" class="btn btn-lg btn-info shadow-lg px-5">
+                <i class="fas fa-tachometer-alt"></i> Dashboard
+            </a>
+            <a href="{{ url_for('voice.voice_interface') }}" class="btn btn-lg btn-secondary shadow-lg px-5">
+                <i class="fas fa-microphone"></i> Voice Commands
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
+<script>
+window.onload = function() {
+  tsParticles.load("tsparticles", {
+    background: { color: { value: "#232526" } },
+    fpsLimit: 60,
+    interactivity: {
+      events: {
+        onHover: { enable: true, mode: "repulse" },
+        resize: true
+      }
+    },
+    particles: {
+      color: { value: "#2c97de" },
+      links: { enable: true, color: "#ffffff", distance: 120, opacity: 0.5, width: 1 },
+      move: { enable: true, speed: 1.1 },
+      number: { value: 48, density: { enable: true, value_area: 900 } },
+      opacity: { value: 0.45 },
+      shape: { type: "circle" },
+      size: { value: 2.8 }
+    }
+  });
+};
+</script>
+{% endblock %}
